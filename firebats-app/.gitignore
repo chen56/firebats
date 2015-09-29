@@ -1,0 +1,9 @@
+/.settings
+/target
+/.classpath
+/.project
+/bin
+/log/
+/build/
+/app.conf
+/app.pid

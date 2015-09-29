@@ -1,0 +1,106 @@
+<!-- scan:true意思是，logback每过60秒扫描一次此配置文件，如果被修改则重新加载此文件；我们可以指定扫描间隔时间如 scanPeriod="30 
+	seconds" -->
+<configuration scan="true">
+	<contextName>user</contextName>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- 控制日志写入方式，encoder还有其它内容，但pattern已足够 -->
+		<encoder>
+			<!-- 日志输出模板 -->
+			<!-- logger：日志名称，{}控制输出字符长度，显示效果有算法控制，去掉{}就显示全名 -->
+			<!-- cn：contextName，上面定义的 -->
+			<!-- level：日志级别-->
+			<!-- relative：从项目启动到此条日志输出的相对时间（毫秒数） -->
+			<pattern>
+				%-5level %date{yy-MM-dd HH:mm:ss.SSS} %cn %property{HOSTNAME} [%thread] %logger{36} - %message%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 三种滚动File生成方式 -->
+	<!-- 第一种 TimeBasedRollingPolicy -->
+	<!-- 此类是异步的 -->
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 日志文件名称 -->
+		<File>log/test.log</File>
+		<!-- 控制日志是添加还是覆盖，true是添加，false是覆盖，默认是true -->
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 每天一个日志文件 -->
+			<!-- 当前日志文件名是上面指定的文件名logFile.log，归档日志文件名格式如下 -->
+			<fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- 保存最近30天的日志 -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>
+				%-5level %date{yy-MM-dd HH:mm:ss.SSS} %cn %property{HOSTNAME} [%thread] %logger{36} - %message%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 第二种 FixedWindowRollingPolicy -->
+	<appender name="FILE2"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>log/test.log</File>
+		<append>true</append>
+		<encoder>
+			<pattern>
+				%-5level %date{yy-MM-dd HH:mm:ss.SSS} %cn %property{HOSTNAME} [%thread] %logger{36} - %message%n
+			</pattern>
+		</encoder>
+		<!-- test.log只保存10kb的数据，当数据超过10kb时便压缩归档，归档策略如下 -->
+		<!-- 滚动策略 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<FileNamePattern>log/test_%i.log.zip</FileNamePattern>
+			<MinIndex>1</MinIndex>
+			<MaxIndex>3</MaxIndex>
+		</rollingPolicy>
+		<!-- 触发策略 -->
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>10KB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<!-- 第三种 -->
+	<appender name="FILE3"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>log/log.txt</file>
+		<!-- 每当mylog.txt大于10kb时归档，且每天归档，归档日志名称如下 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 按周：yyyy-ww -->
+			<fileNamePattern>log/mylog-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>5MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>
+				%-5level %date{yy-MM-dd HH:mm:ss.SSS} %cn %property{HOSTNAME} [%thread] %logger{36} - %message%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- 
+		root logger 控制全局日志记录的级别，如果要单独控制某些类的日志记录级别，要单独定义logger； test2.sub包下面所有日志只有error级别的才被记录
+		TRACE, DEBUG, INFO, WARN, ERROR, ALL ,OFF, INHERITED, NULL
+		INHERITED与NULL一样，意思是从最近的祖先继承
+	-->
+	<logger name="firebats" level="DEBUG"/>
+	<logger name="was" level="DEBUG"/>
+		
+	<!-- 
+		root logger ， level控制记录日志的级别，debug及其以上级别的日志将被记录
+		可选项：TRACE, DEBUG, INFO, WARN, ERROR, ALL or OFF
+		级别排序：TRACE < DEBUG < INFO < WARN < ERROR
+		不区分大小写
+	-->
+	<root level="ERROR">
+		<appender-ref ref="FILE3" />
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>

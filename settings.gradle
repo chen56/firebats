@@ -1,0 +1,1 @@
+include "firebats-app","firebats-test","firebats-bus","firebats-common","firebats-config","firebats-http","firebats-httpclient"

@@ -1,0 +1,131 @@
+apply from: file('gradle/dependencies.gradle')
+
+//可使用以下方式使用libs
+//println '----------------------------------------------------------------------${libs.get('a-b')} '
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}
+
+configure(allprojects) { project ->
+  group = 'firebats'
+  version = '1.6.1-SNAPSHOT'
+}
+
+//消除java 8 javadoc的强制约束
+//http://stackoverflow.com/questions/22528767/jdk8-and-javadoc-has-become-very-strict/22529222#22529222
+if (JavaVersion.current().isJava8Compatible()) {
+	subprojects {
+		tasks.withType(Javadoc) {
+			options.addStringOption('Xdoclint:none', '-quiet')
+		}
+	}
+}
+
+configure(subprojects) { project ->
+  apply plugin: 'java'
+  apply plugin: 'eclipse'
+  apply plugin: 'maven-publish'
+
+  project.buildDir = 'target'
+
+  //firebats默认项目集为java 1.7
+  sourceCompatibility = 1.7
+  targetCompatibility = 1.7
+
+  [compileJava, compileTestJava]*.options.collect {options -> options.encoding = 'UTF-8'} 
+
+
+  task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+  }
+  //gradle -Pproperty3='this is property3' showCommandLieProperties
+  //gradlew main -Dorg.gradle.project.mainClass=firebats.bus.benchmarks.bus.RawClient_ObjectServerBench
+  task main(type:JavaExec) {
+    if (project.hasProperty('mainClass')) {
+      main = mainClass
+    }
+    classpath = sourceSets.test.runtimeClasspath
+  }
+  
+  task testUnit(type: Test) {
+    //include '**/*SuiteOne.*'
+    include '**/AllUnitTests.class'
+    reports.junitXml.destination = "$buildDir/test-results/AllUnitTests"
+    reports.html.destination = "$buildDir/test-results/AllUnitTests"
+  }
+  task testAll(type: Test) {
+    //include '**/*SuiteOne.*'
+    include '**/AllTests.class'
+    reports.junitXml.destination = "$buildDir/test-results/AllTests"
+    reports.html.destination = "$buildDir/test-results/AllTests"
+  }
+  task testIntegration(type: Test) {
+    //include '**/*SuiteOne.*'
+    include '**/AllIntegrationTests.class'
+    reports.junitXml.destination = "$buildDir/test-results/AllIntegrationTests"
+    reports.html.destination = "$buildDir/test-results/AllIntegrationTests"
+  }
+  
+  
+  tasks.withType(Javadoc) {
+      if(JavaVersion.current().isJava8Compatible()) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+      }
+  }
+  
+  eclipse {
+    classpath {
+       downloadSources=true
+    }
+  }
+
+  configurations {
+    all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+  }
+
+
+  repositories {
+    mavenLocal()
+    maven {
+      url 'http://nexus.xxxxx.com:8081/nexus/content/groups/public'
+      credentials {
+        username 'server'
+        password 'xxx'
+      }
+    }
+  }
+
+// This sets up the classpath for the script itself
+  buildscript {
+    repositories {
+      mavenLocal()
+      maven {
+        url 'http://nexus.xxxxx.com:8081/nexus/content/groups/public'
+        credentials {
+          username 'server'
+          password 'xxx'
+        }
+      }
+    }
+    dependencies {
+    }
+  }
+
+  publishing {
+    repositories {
+      maven {
+       	//url 'http://nexus.xxxxx.com:8081/nexus/content/repositories/releases'
+       	//url 'http://nexus.xxxxx.com:8081/nexus/content/repositories/snapshots'
+        url "http://nexus.xxxxx.com:8081/nexus/content/repositories/${project.version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases' }"
+        credentials {
+          username 'server'
+          password 'xxx'
+        }
+      }
+    }
+  }
+  
+}//end configure(subprojects)
+
+   

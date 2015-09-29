@@ -1,0 +1,39 @@
+
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
+
+  dependencies {
+    compile project(':firebats-common')
+    compile project(':firebats-config')
+    testCompile project(':firebats-test')
+    
+    compile libs['com.google.guava:guava']
+    compile libs['com.beust:jcommander']
+    compile libs['org.reflections:reflections']
+     
+     
+    
+    //log
+    compile libs['org.slf4j:slf4j-api']
+    compile libs['ch.qos.logback:logback-classic']
+    
+    //test
+    testCompile libs['junit:junit']
+    testCompile libs['org.easytesting:fest-assert-core']
+    
+    
+    //upgrade use
+    
+  }
+  
+  publishing {
+    publications {
+      mavenJava(MavenPublication) {
+        from components.java
+          artifact sourceJar {
+            classifier 'sources'
+          }
+      }
+    }
+  }
+  

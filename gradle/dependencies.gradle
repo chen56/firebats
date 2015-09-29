@@ -1,0 +1,76 @@
+ext.libs = [
+
+  //core
+  'com.google.guava:guava':'com.google.guava:guava:18.0',
+  'com.google.code.findbugs:jsr305': 'com.google.code.findbugs:jsr305:2.0.1',
+  'io.reactivex:rxjava' : 'io.reactivex:rxjava:1.0.12',
+  'io.reactivex:rxjava-string' : 'io.reactivex:rxjava-string:0.21.0',
+  'io.reactivex:rxjava-joins' : 'io.reactivex:rxjava-joins:0.21.0',
+   
+  'org.apache.commons:commons-lang3':'org.apache.commons:commons-lang3:3.3.2',
+  'commons-codec:commons-codec':'commons-codec:commons-codec:1.9',
+  //jsr-310 time api backport
+  'org.threeten:threetenbp':'org.threeten:threetenbp:1.0',
+  
+  //validation
+  'javax.validation:validation-api':'javax.validation:validation-api:1.1.0.Final',
+  'org.hibernate:hibernate-validator':'org.hibernate:hibernate-validator:5.1.2.Final',
+  'javax.el:javax.el-api':'javax.el:javax.el-api:3.0.1-b04',
+  'org.glassfish.web:javax.el':'org.glassfish.web:javax.el:2.2.4',
+  
+  //validation and databind
+  'org.springframework:spring-core':'org.springframework:spring-core:4.2.0.RC1',
+  'org.springframework:spring-beans':'org.springframework:spring-beans:4.2.0.RC1',
+  'org.springframework:spring-context':'org.springframework:spring-context:4.2.0.RC1',
+  'org.springframework:spring-web':'org.springframework:spring-web:4.2.0.RC1',
+  
+  //config
+  'com.netflix.archaius:archaius-core':'com.netflix.archaius:archaius-core:0.6.0',
+  
+  //net
+  'io.reactivex:rxnetty':'io.reactivex:rxnetty:0.4.4',
+  'org.apache.httpcomponents:httpclient':'org.apache.httpcomponents:httpclient:4.1.2',
+  'org.apache.httpcomponents:httpmime':'org.apache.httpcomponents:httpmime:4.1.2',
+  'io.netty:netty-all':'io.netty:netty-all:4.0.21.Final',
+   
+  //templete
+  'com.samskivert:jmustache':'com.samskivert:jmustache:1.9',
+  
+  //command line
+  'com.beust:jcommander':'com.beust:jcommander:1.35',
+  
+  //serializer
+  'com.fasterxml.jackson.core:jackson-databind' : 'com.fasterxml.jackson.core:jackson-databind:2.5.4',
+  'com.google.code.gson:gson':'com.google.code.gson:gson:2.2.4',
+  
+  //log
+  'org.slf4j:slf4j-api':'org.slf4j:slf4j-api:1.7.6',
+  'ch.qos.logback:logback-classic':'ch.qos.logback:logback-classic:1.1.2',
+  
+  //database  
+  'com.lambdaworks:lettuce':'com.lambdaworks:lettuce:2.3.3',
+  'org.apache.curator:curator-framework':'org.apache.curator:curator-framework:2.7.0',
+  'org.apache.curator:curator-client':'org.apache.curator:curator-client:2.7.0',
+  'org.apache.curator:curator-x-discovery':'org.apache.curator:curator-x-discovery:2.7.0',
+  
+  'org.apache.curator:curator-test':'org.apache.curator:curator-test:2.7.0',
+  'org.apache.kafka:kafka_2.10':'org.apache.kafka:kafka_2.10:0.8.1.1',
+  'org.mongodb:bson':'org.mongodb:bson:2.12.2',
+  'org.mongodb:mongo-java-driver':'org.mongodb:mongo-java-driver:2.12.2',
+  'org.jongo:jongo':'org.jongo:jongo:1.1',
+  'mysql:mysql-connector-java':'mysql:mysql-connector-java:5.1.25',
+  
+  //embed database for test
+  'de.flapdoodle.embed:de.flapdoodle.embed.mongo':'de.flapdoodle.embed:de.flapdoodle.embed.mongo:1.46.1',
+  'de.flapdoodle.embed:de.flapdoodle.embed.redis':'de.flapdoodle.embed:de.flapdoodle.embed.redis:1.10.1',
+  
+  //cmd
+  'com.beust:jcommander':'com.beust:jcommander:1.35',
+  
+  //class search
+  'org.reflections:reflections':'org.reflections:reflections:0.9.9-RC1',
+  
+  //test
+  'junit:junit':'junit:junit:4.11',
+  'org.easytesting:fest-assert-core':'org.easytesting:fest-assert-core:2.0M10',
+]

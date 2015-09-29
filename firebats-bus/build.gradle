@@ -1,0 +1,26 @@
+  sourceCompatibility = 1.7
+  targetCompatibility = 1.7
+  dependencies {
+    compile project(':firebats-common')
+    testCompile project(':firebats-test')
+    compile libs['io.reactivex:rxnetty']
+    
+    compile libs['org.apache.curator:curator-framework']
+    compile libs['org.apache.curator:curator-client']
+    compile libs['org.apache.curator:curator-x-discovery']
+    testCompile libs['org.apache.curator:curator-test']
+    
+    testCompile libs['junit:junit']
+    testCompile libs['org.easytesting:fest-assert-core']
+  }
+
+  publishing {
+    publications {
+      mavenJava(MavenPublication) {
+        from components.java
+          artifact sourceJar {
+            classifier 'sources'
+          }
+      }
+    }
+  }

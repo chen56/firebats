@@ -1,0 +1,30 @@
+
+  sourceCompatibility = 1.7
+  targetCompatibility = 1.7
+  
+
+  dependencies {
+    compile project(':firebats-common')
+    testCompile project(':firebats-test')
+
+    compile libs['com.google.guava:guava']
+    compile libs['io.reactivex:rxjava']
+    compile libs['org.slf4j:slf4j-api']
+    
+    testCompile libs['ch.qos.logback:logback-classic']
+    compile libs['com.netflix.archaius:archaius-core']
+ 
+    testCompile libs['junit:junit']
+    testCompile libs['org.easytesting:fest-assert-core']
+  }
+
+  publishing {
+    publications {
+      mavenJava(MavenPublication) {
+        from components.java
+          artifact sourceJar {
+            classifier 'sources'
+          }
+      }
+    }
+  }

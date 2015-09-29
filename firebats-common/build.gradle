@@ -1,0 +1,38 @@
+
+  sourceCompatibility = 1.7
+  targetCompatibility = 1.7
+  
+  dependencies {
+    testCompile project(':firebats-test')
+        
+    compile libs['com.google.guava:guava']
+    compile libs['io.reactivex:rxjava']
+    compile libs['com.fasterxml.jackson.core:jackson-databind']
+    compile libs['com.google.code.findbugs:jsr305']
+    //net
+    compile libs['io.reactivex:rxnetty']
+    compile libs['io.netty:netty-all']
+     
+    //template
+    compile libs['com.samskivert:jmustache']
+    
+    //log
+    compile libs['org.slf4j:slf4j-api']
+    testCompile libs['ch.qos.logback:logback-classic']
+    
+    //test
+    testCompile libs['junit:junit']
+    testCompile libs['org.easytesting:fest-assert-core']
+    
+  }
+
+  publishing {
+    publications {
+      mavenJava(MavenPublication) {
+        from components.java
+          artifact sourceJar {
+            classifier 'sources'
+          }
+      }
+    }
+  }
